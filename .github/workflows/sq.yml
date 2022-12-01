@@ -25,7 +25,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-c-cpp@v1
       - name: Run tests to generate coverage information
         run: |
-          ctest
+          ./test/tu_buggies
           mv default.profraw ctest.profraw
       - name: Merge counters from different runs and convert the result into an llvm-cov-compatible form
         run: |
