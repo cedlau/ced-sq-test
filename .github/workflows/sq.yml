@@ -28,8 +28,14 @@ jobs:
           #mkdir build
           cmake -S . -B build
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+          echo ">current"
           ls
-          ls build
+          echo ">test"
+          ls test/
+          echo ">build"
+          ls build/
+          echo ">build_wrapper_output_directory"
+          ls build_wrapper_output_directory/
       - name: Run tests to generate coverage information
         run: |
           ./build/tu_buggies
