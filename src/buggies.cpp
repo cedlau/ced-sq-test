@@ -6,7 +6,7 @@
 Buggy::Buggy()
 {
   int *tmp = (int*)malloc(10*sizeof(int));
-  tmp[5] = 3;
+  tmp[5] = 3;;
 
   value = 4.;
 }
