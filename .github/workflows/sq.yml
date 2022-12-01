@@ -28,17 +28,11 @@ jobs:
           #mkdir build
           cmake -S . -B build
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
-          echo ">current"
-          ls
-          echo ">test"
-          ls test/
-          echo ">build"
-          ls build/
-          echo ">build_wrapper_output_directory"
-          ls build_wrapper_output_directory/
+          echo ">build/test"
+          ls build/test/
       - name: Run tests to generate coverage information
         run: |
-          ./build/tu_buggies
+          ./build/test/tu_buggies
           mv default.profraw ctest.profraw
       - name: Merge counters from different runs and convert the result into an llvm-cov-compatible form
         run: |
