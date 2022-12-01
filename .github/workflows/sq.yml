@@ -30,7 +30,7 @@ jobs:
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
       - name: Run tests to generate coverage information
         run: |
-          ctest
+          ./build/tu_buggies
           mv default.profraw ctest.profraw
       - name: Merge counters from different runs and convert the result into an llvm-cov-compatible form
         run: |
