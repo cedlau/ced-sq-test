@@ -23,6 +23,11 @@ jobs:
           version: "13.0"
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
+      - name: Run build-wrapper
+        run: |
+          #mkdir build
+          cmake -S . -B build
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
       - name: Run tests to generate coverage information
         run: |
           ./test/tu_buggies
@@ -33,11 +38,6 @@ jobs:
       - name: Collect the coverage
         run: |
           llvm-cov show --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
-      - name: Run build-wrapper
-        run: |
-          #mkdir build
-          cmake -S . -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
