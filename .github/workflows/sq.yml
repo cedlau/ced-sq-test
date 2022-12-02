@@ -12,38 +12,24 @@ jobs:
     env:
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
     steps:
-      - name: Install gtest
-        run: sudo apt-get install libgtest-dev
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y build-essential libgtest-dev llvm clang-10
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Install Clang and LLVM (including llvm-cov)
-        uses: KyleMayes/install-llvm-action@v1
-        with:
-          version: "13.0"
       - name: Install sonar-scanner and build-wrapper
         uses: SonarSource/sonarcloud-github-c-cpp@v1
       - name: Run build-wrapper
         run: |
           #mkdir build
           cmake -S . -B build
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Release
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} cmake --build build/ --config Debug
       - name: Run tests to generate coverage information
         run: |
-          ./build/test/tu_buggies
-          echo ">."
-          ls ./
-          echo ">build"
-          ls ./build/
-          echo ">build/test"
-          ls ./build/test/
-          mv default.profraw ctest.profraw
-      - name: Merge counters from different runs and convert the result into an llvm-cov-compatible form
-        run: |
-          llvm-profdata merge -o merged.profdata *.profraw
-      - name: Collect the coverage
-        run: |
-          llvm-cov show --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
+          chmod +x coverage.sh
+          ./coverage.sh
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
