@@ -29,6 +29,6 @@ LLVM_PROFILE_FILE="code-%p.profraw" ${CXX_EXECUTABLE}
 
 llvm-profdata merge -output=code.profdata code-*.profraw
 llvm-cov report ${CXX_EXECUTABLE} -instr-profile=code.profdata -use-color -ignore-filename-regex=src/vendors/*
-llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp -path-equivalence  --format text > coverage.txt
+llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp -path-equivalence  -format text > coverage.txt
 #llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp -path-equivalence -use-color --format html > coverage.html
 #echo "open coverage.html for HTML version of this report"
