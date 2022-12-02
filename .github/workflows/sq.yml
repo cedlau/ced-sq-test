@@ -31,6 +31,10 @@ jobs:
       - name: Run tests to generate coverage information
         run: |
           ./build/test/tu_buggies
+          echo ">."
+          ls ./
+          echo ">build"
+          ls ./build/
           echo ">build/test"
           ls ./build/test/
           mv default.profraw ctest.profraw
