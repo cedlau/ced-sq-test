@@ -20,10 +20,11 @@ export LDFLAGS="-fprofile-instr-generate"
 rm -f *profraw
 rm -f *gcov
 rm -f *profdata
-LLVM_PROFILE_FILE="code-%p.profraw" ./build/test/tu_buggies
+CXX_EXECUTABLE="./build/test/tu_buggies"
+LLVM_PROFILE_FILE="code-%p.profraw" ${CXX_EXECUTABLE}
 
 llvm-profdata merge -output=code.profdata code-*.profraw
-llvm-cov report ${CXX_MODULE} -instr-profile=code.profdata -use-color -ignore-filename-regex=src/vendors/* -ignore-filename-regex=node_modules/* -ignore-filename-regex=/usr/include/nodejs/src/node_api.h
-llvm-cov show ${CXX_MODULE} -instr-profile=code.profdata srccpp/*.cpp -path-equivalence -use-color -ignore-filename-regex=src/vendors/* -ignore-filename-regex=node_modules/*  -ignore-filename-regex=/usr/include/nodejs/src/node_api.h --format html > coverage.html
-#llvm-cov show ${CXX_MODULE} -instr-profile=code.profdata srccpp/*.cpp -path-equivalence -use-color --format html > coverage.html
+llvm-cov report ${CXX_EXECUTABLE} -instr-profile=code.profdata -use-color -ignore-filename-regex=src/vendors/*
+llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata srccpp/*.cpp -path-equivalence -use-color -ignore-filename-regex=src/vendors/* --format text > coverage.txt
+#llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata srccpp/*.cpp -path-equivalence -use-color --format html > coverage.html
 #echo "open coverage.html for HTML version of this report"
