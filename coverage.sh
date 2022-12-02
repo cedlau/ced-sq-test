@@ -30,6 +30,6 @@ LLVM_PROFILE_FILE="code-%p.profraw" ${CXX_EXECUTABLE}
 llvm-profdata merge -output=code.profdata code-*.profraw
 llvm-cov report ${CXX_EXECUTABLE} -instr-profile=code.profdata -use-color -ignore-filename-regex=src/vendors/*
 #llvm-cov show --instr-profile merged.profdata build/coverage_test1 -object build/coverage_test2 > coverage.txt
-llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp -path-equivalence  -> coverage.txt
+llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp > coverage.txt
 #llvm-cov show ${CXX_EXECUTABLE} -instr-profile=code.profdata src/*.cpp -path-equivalence -use-color --format html > coverage.html
 #echo "open coverage.html for HTML version of this report"
