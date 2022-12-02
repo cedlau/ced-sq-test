@@ -4,10 +4,12 @@ project(libbuggy)
 
 set(srcs
     buggies.cpp
+    utils.cpp
     )
     
 set(headers
     buggies.h
+    utils.h
     )
 
 add_library(buggy SHARED ${headers} ${srcs})
