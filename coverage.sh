@@ -10,17 +10,21 @@ set -o pipefail
 # https://github.com/mapbox/cpp#code-coverage
 # https://github.com/mapbox/node-cpp-skel/blob/main/scripts/coverage.sh
 
-export CXX=/usr/bin/clang++-10
-export LINK=/usr/bin/clang++-10
-export GYP_DEFINES="clang=1"
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+export LINK=/usr/bin/clang++
 
 export CXXFLAGS="-fprofile-instr-generate -fcoverage-mapping"
 export LDFLAGS="-fprofile-instr-generate"
 
+cmake .
+make
+./test/tu_buggies
+
 rm -f *profraw
 rm -f *gcov
 rm -f *profdata
-CXX_EXECUTABLE="./build/test/tu_buggies"
+CXX_EXECUTABLE="./test/tu_buggies"
 LLVM_PROFILE_FILE="code-%p.profraw" ${CXX_EXECUTABLE}
 
 llvm-profdata merge -output=code.profdata code-*.profraw
