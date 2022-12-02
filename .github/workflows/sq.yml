@@ -34,7 +34,7 @@ jobs:
           echo ">."
           ls -l ./
           echo ">coverage.txt"
-          car coverage.txt
+          cat coverage.txt
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
